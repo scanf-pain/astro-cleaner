@@ -14,11 +14,15 @@ const filterCanvas = (srcCanvas, destCanvas, filters) => {
 
   matFilterMedian(filtered);
 
-  matFilterBrightness(filtered, filters.intensiy);
+  if (filtered.intensity !== undefined) {
+    matFilterBrightness(filtered, filters.intensity);
+  }
 
   matSubMat(srcImg, filtered, filtered);
 
-  matFilterBrightness(filtered, filters.brightness);
+  if (filtered.brightness !== undefined) {
+    matFilterBrightness(filtered, filters.brightness);
+  }
 
   cv.imshow(destCanvas, filtered);
 
