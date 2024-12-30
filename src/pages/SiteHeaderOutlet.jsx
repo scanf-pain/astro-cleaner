@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 const SiteHeaderOutlet = () => {
   return (
     <div className="bg-[url('/save-banner-small.png')]">
-      <SiteHeader className={"bg-content1 bg-red-300"} isBordered={false} />
+      <SiteHeader className={"bg-content1"} isBordered={false} />
       <Outlet />
     </div>
   );
