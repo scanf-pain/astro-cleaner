@@ -5,7 +5,9 @@ const SiteHeaderOutlet = () => {
   return (
     <div className="bg-[url('/save-banner-small.png')]">
       <SiteHeader className={"bg-content1"} isBordered={false} />
-      <Outlet />
+      <main className={"flex flex-col items-center justify-center"}>
+        <Outlet />
+      </main>
     </div>
   );
 };

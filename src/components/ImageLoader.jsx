@@ -3,9 +3,9 @@ import SampleSelector from "./SampleSelector.jsx";
 import PropTypes from "prop-types";
 
 const samplesUrls = [
-  "/samples/space-1.png",
-  "/samples/space-2.png",
-  "/samples/space-3.png",
+  "samples/space-1.png",
+  "samples/space-2.png",
+  "samples/space-3.png",
 ];
 
 const ImageLoader = ({ onImageUrlLoad, ...props }) => {

@@ -19,8 +19,8 @@ const QuickstartPage = () => {
         <li>
           <h2>Tweak</h2>
           <div className={"flex gap-6"}>
-            <Image src={"/guide/guide-filter-1.jpg"} />
-            <Image src={"/guide/guide-filter-2.jpg"} />
+            <Image src={"guide/guide-filter-1.jpg"} />
+            <Image src={"guide/guide-filter-2.jpg"} />
           </div>
 
           <p className={"text-2xl"}>
@@ -29,7 +29,7 @@ const QuickstartPage = () => {
         </li>
         <li>
           <h2>Export</h2>
-          <Image src={"/guide/guide-export.jpg"} />
+          <Image src={"guide/guide-export.jpg"} />
         </li>
       </ol>
     </section>
