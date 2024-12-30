@@ -1,5 +1,5 @@
 /**
- * Substract second matrice from first matrice and save result in destMat
+ * Subtract second matrice from first matrice and save result in destMat
  * @param cvMat1 opencv Mat
  * @param cvMat2 opencv Mat
  * @param destMat opencv Mat

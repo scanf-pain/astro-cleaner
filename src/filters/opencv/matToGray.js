@@ -6,7 +6,7 @@ const matToGray = (cvMat) => {
   const cv = window.cv;
 
   if (cvMat.channels() === 3) {
-    // If it's a RGB image
+    // If it's RGB image
     cv.cvtColor(cvMat, cvMat, cv.COLOR_RGB2GRAY);
   } else if (cvMat.channels() === 4) {
     // If it has an alpha channel (RGBA)
@@ -14,4 +14,4 @@ const matToGray = (cvMat) => {
   }
 };
 
-export default matToGray();
+export default matToGray;

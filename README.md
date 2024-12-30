@@ -1,2 +1,3 @@
 # Astro Cleaner app
-Remove light polution from astrography images
+
+Remove light pollution from astrography images

@@ -1,11 +1,11 @@
 /**
- * Brightness by multiplication
+ * Brightness filter
  * @param cvMat opencv Mat
- * @param multiplier number to multiply brightness
+ * @param value number to increase brightness
  */
-const matFilterBrightness = (cvMat, multiplier) => {
-  if (multiplier !== 1) {
-    cvMat.convertTo(cvMat, -1, multiplier, 0);
+const matFilterBrightness = (cvMat, value) => {
+  if (value !== 0) {
+    cvMat.convertTo(cvMat, -1, 1, value);
   }
 };
 
