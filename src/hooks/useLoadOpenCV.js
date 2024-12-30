@@ -12,21 +12,23 @@ const useLoadOpenCV = () => {
         if (!existingScript) {
           const script = document.createElement("script");
           script.id = "opencv-js";
-          script.src = "https://docs.opencv.org/4.x/opencv.js";
+          script.src = "https://docs.opencv.org/4.9.0/opencv.js";
           script.async = true;
           script.onload = () => {
-            console.log("OpenCV.js is ready!");
-            setIsCvLoaded(true);
+            script.isLoaded = true;
+            setIsCvLoaded(() => true);
             resolve();
           };
           script.onerror = () => {
-            console.error("Failed to load OpenCV.js");
             setIsError(true);
             reject(new Error("OpenCV.js failed to load"));
           };
           document.body.appendChild(script);
         } else {
-          console.log("OpenCV.js already loaded");
+          if (existingScript.isLoaded) {
+            setIsCvLoaded(() => true);
+            resolve();
+          }
           resolve();
         }
       });
