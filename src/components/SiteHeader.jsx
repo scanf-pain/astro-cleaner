@@ -1,5 +1,4 @@
 import {
-  Link,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -12,6 +11,7 @@ import { twMerge } from "tailwind-merge";
 import AstroLogo from "../icons/AstroLogo.jsx";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import Link from "./Link.jsx";
 
 const links = [
   {
@@ -70,7 +70,7 @@ const SiteHeader = ({
 
       <NavbarContent className={"pr-2"} justify={"center"}>
         <NavbarBrand>
-          <Link href="/" className={"text-white"}>
+          <Link href="/" className={"text-white hover:no-underline"}>
             <AstroLogo className={"size-8"} />
             <p className="pl-2 text-2xl">ASTROCLEANER</p>
           </Link>

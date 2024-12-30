@@ -25,7 +25,7 @@ const loadUrlImgToCanvas = (canvas, url) => {
 
 const saveCanvas = (canvas) => {
   const link = document.createElement("a");
-  link.download = "canvas-image.png";
+  link.download = "cleaned-image.png";
   link.href = canvas.toDataURL();
   link.click();
 };
