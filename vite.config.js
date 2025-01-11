@@ -6,4 +6,5 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig({
   plugins: [svgr(), react()],
   base: "/astro-cleaner/",
+  title: "Astro Cleaner",
 });
