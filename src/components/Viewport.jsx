@@ -105,14 +105,12 @@ const Viewport = ({ sourceCanvas, disabled }) => {
 
   return (
     <section
-      className={
-        "viewport flex min-h-full min-w-full grow items-stretch border-1 border-blue-500"
-      }
+      className={"viewport flex min-h-full min-w-full grow items-stretch"}
     >
       <canvas
         ref={outputCanvasRef}
         className={twMerge(
-          "min-h-full min-w-full touch-none border-4 border-dashed border-red-500",
+          "min-h-full min-w-full touch-none",
           isDragging ? "cursor-grabbing" : "cursor-grab",
         )}
         title={"Filtered image"}
