@@ -7,7 +7,6 @@ import {
 import ImageLoader from "../components/ImageLoader.jsx";
 import filterCanvas from "../filters/mainFilter.js";
 import Viewport from "../components/Viewport.jsx";
-import SidePanel from "../components/SidePanel.jsx";
 import { flushSync } from "react-dom";
 import LoadingOverlay from "../components/LoadingOverlay.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
@@ -18,6 +17,7 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@nextui-org/react";
+import SidePanel from "../components/SidePanel.jsx";
 
 const Astrocleaner = () => {
   // app state
@@ -84,7 +84,7 @@ const Astrocleaner = () => {
         }
         childrenEnd={
           <NavbarContent>
-            <NavbarItem className={"pl-4"}>
+            <NavbarItem>
               <Button
                 variant={"shadow"}
                 color={"primary"}
@@ -116,7 +116,7 @@ const Astrocleaner = () => {
       {isImgLoaded ? (
         <div
           className={
-            "flex w-full grow flex-col items-stretch justify-around md:flex-row"
+            "grid grow items-start md:grid-flow-col-dense md:items-stretch"
           }
         >
           <SidePanel
