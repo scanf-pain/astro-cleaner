@@ -61,7 +61,7 @@ const SidePanel = ({ filterValues, onFilterChange, disabled, ...props }) => {
         )}
       >
         <Filters
-          className={"gap-4 p-4"}
+          className={twMerge("gap-4 p-4", open || "md:hidden")}
           filterValues={filterValues}
           isDisabled={disabled}
           onFilterChange={onFilterChange}
