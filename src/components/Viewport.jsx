@@ -1,53 +1,100 @@
-import { useEffect, useRef } from "react";
-import { Button } from "@nextui-org/react";
-import { useCanvasPan } from "../hooks/canvas/useCanvasPan.js";
-import { useCanvasZoom } from "../hooks/canvas/useCanvasZoom.js";
+import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { GroupIcon, ZoomInIcon, ZoomOutIcon } from "@radix-ui/react-icons";
 import PropTypes from "prop-types";
+import { Button } from "@nextui-org/react";
+import { GroupIcon, ZoomInIcon, ZoomOutIcon } from "@radix-ui/react-icons";
+import useCanvasControl from "../hooks/canvas/useCanvasControl.js";
 
 const Viewport = ({ sourceCanvas, disabled }) => {
   const outputCanvasRef = useRef(null);
+  const [canvasSize, setCanvasSize] = useState({ x: 0, y: 0 });
 
   const {
+    zoom,
+    zoomIn,
+    zoomOut,
+    resetZoom,
     offsetX,
     offsetY,
-    isDragging,
     resetOffset,
+    isDragging,
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
-  } = useCanvasPan();
-
-  const { zoom, resetZoom, handleWheel, handleZoomOut, handleZoomIn } =
-    useCanvasZoom(1, 0.1, 100, 0.1);
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+    handleWheel,
+  } = useCanvasControl(0, 0, 0.9);
 
   // --- canvas rendering ---
 
-  const zoomCanvas = (context, zoom) => {
-    context.scale(zoom, zoom);
-  };
-
+  // renders canvas
   useEffect(() => {
-    if (outputCanvasRef && sourceCanvas) {
+    if (outputCanvasRef.current) {
       outputCanvasRef.current.height = sourceCanvas.height;
       outputCanvasRef.current.width = sourceCanvas.width;
       const context = outputCanvasRef.current.getContext("2d");
 
       if (context) {
-        const zoomedWidth = outputCanvasRef.current.width * zoom;
-        const zoomedHeight = outputCanvasRef.current.height * zoom;
-        const translateX = (outputCanvasRef.current.width - zoomedWidth) / 2;
-        const translateY = (outputCanvasRef.current.height - zoomedHeight) / 2;
+        const rx = outputCanvasRef.current.width;
+        const ry = outputCanvasRef.current.height;
 
-        console.log("rendering canvas");
+        const cx = outputCanvasRef.current.offsetWidth;
+        const cy = outputCanvasRef.current.offsetHeight;
+
+        const ix = outputCanvasRef.current.width;
+        const iy = outputCanvasRef.current.height;
+
         context.clearRect(0, 0, sourceCanvas.width, sourceCanvas.height);
-        context.translate(translateX + offsetX, translateY + offsetY);
-        zoomCanvas(context, zoom);
-        context.drawImage(sourceCanvas, 0, 0);
+
+        context.translate(rx * 0.5, ry * 0.5); // center the image
+
+        const imgRatio = ix / iy;
+
+        context.scale(1, cx / imgRatio / cy); // resolution
+
+        context.translate(offsetX, offsetY);
+
+        context.scale(zoom, zoom);
+
+        context.drawImage(sourceCanvas, -ix * 0.5, -iy * 0.5);
       }
     }
-  }, [sourceCanvas, outputCanvasRef, disabled, zoom, offsetX, offsetY]);
+  }, [
+    sourceCanvas,
+    outputCanvasRef,
+    disabled,
+    zoom,
+    offsetX,
+    offsetY,
+    canvasSize,
+  ]);
+
+  // observe canvas size change, need to trigger redraw when window size changes
+  useEffect(() => {
+    const canvasElement = outputCanvasRef.current;
+    if (!canvasElement) return;
+
+    const updateSize = () => {
+      setCanvasSize({
+        x: canvasElement.offsetWidth,
+        y: canvasElement.offsetHeight,
+      });
+    };
+
+    const observer = new ResizeObserver(() => {
+      updateSize();
+    });
+
+    observer.observe(canvasElement);
+
+    updateSize();
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   // --- handles ---
 
@@ -59,13 +106,13 @@ const Viewport = ({ sourceCanvas, disabled }) => {
   return (
     <section
       className={
-        "viewport flex h-full w-full flex-initial grow items-center justify-center self-center overflow-clip p-4"
+        "viewport flex min-h-full min-w-full grow items-stretch border-1 border-blue-500"
       }
     >
       <canvas
         ref={outputCanvasRef}
         className={twMerge(
-          "h-full w-full",
+          "min-h-full min-w-full touch-none border-4 border-dashed border-red-500",
           isDragging ? "cursor-grabbing" : "cursor-grab",
         )}
         title={"Filtered image"}
@@ -74,22 +121,22 @@ const Viewport = ({ sourceCanvas, disabled }) => {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
-      />
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      ></canvas>
       <div className={"absolute bottom-10 right-10 flex items-center gap-1"}>
-        <Button onClick={handleZoomOut} isIconOnly={true} title={"Zoom out"}>
+        <Button onClick={() => zoomOut()} isIconOnly={true} title={"Zoom out"}>
           <ZoomOutIcon className={"size-6"} />
         </Button>
         <p>{Math.round(zoom * 100)}%</p>
-        <Button onClick={handleZoomIn} isIconOnly={true} title={"Zoom in"}>
+        <Button onClick={() => zoomIn()} isIconOnly={true} title={"Zoom in"}>
           <ZoomInIcon className={"size-6"} />
         </Button>
         <Button onClick={handleReset} isIconOnly={true} title={"Reset zoom"}>
           <GroupIcon className={"size-6"} />
         </Button>
       </div>
-      <div
-        className={"absolute bottom-0 h-4 w-full bg-content1 md:hidden"}
-      ></div>
     </section>
   );
 };
