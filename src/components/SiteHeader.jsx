@@ -100,7 +100,11 @@ const SiteHeader = ({
       <NavbarMenu className={"bg-content1/80"}>
         {childrenMenu}
         {links.map((link, index) => (
-          <NavbarMenuItem key={index} className={"flex flex-col"}>
+          <NavbarMenuItem
+            key={index}
+            className={"flex flex-col"}
+            onClick={() => setIsMenuOpen(false)}
+          >
             <Link
               className={
                 "flex justify-center p-4 text-3xl text-foreground hover:text-primary"

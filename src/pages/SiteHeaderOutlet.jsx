@@ -3,9 +3,9 @@ import { Outlet } from "react-router-dom";
 
 const SiteHeaderOutlet = () => {
   return (
-    <div className="bg-[url('/save-banner-small.png')]">
+    <div className="grow flex-col bg-[url('/save-banner-small.png')]">
       <SiteHeader className={"bg-content1"} isBordered={false} />
-      <main className={"flex flex-col items-center justify-center"}>
+      <main className={"flex-col items-center justify-center"}>
         <Outlet />
       </main>
     </div>
