@@ -4,6 +4,7 @@ import AstrocleanerLoader from "./AstrocleanerLoader.jsx";
 import SiteHeaderOutlet from "./pages/SiteHeaderOutlet.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import QuickstartPage from "./pages/QuickstartPage.jsx";
+import AboutPage from "./pages/AboutPage.jsx";
 
 const App = () => {
   return (
@@ -11,7 +12,7 @@ const App = () => {
       <Route path="/" element={<SiteHeaderOutlet />}>
         <Route index element={<WelcomePage />} />
         <Route path={"quickstart"} element={<QuickstartPage />} />
-        <Route path={"about"} element={<WelcomePage />} />
+        <Route path={"about"} element={<AboutPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Route>
       <Route path="/app" element={<AstrocleanerLoader />} />
