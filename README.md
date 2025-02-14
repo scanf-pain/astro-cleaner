@@ -1,6 +1,6 @@
 # Astro Cleaner
 
-Remove light pollution from stratigraphy images
+Remove light pollution from astrography images
 
 
 <img src="public/readme/before-after1.png" style="max-height: 200px; max-width: 100% ;">
